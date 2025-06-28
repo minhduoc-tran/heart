@@ -156,7 +156,7 @@ const HeartCanvas: React.FC = () => {
 
       // Draw text
       ctx.save();
-      ctx.font = "bold 48px Arial";
+      ctx.font = "bold 22px Arial";
       ctx.fillStyle = "#ff69b4";
       ctx.textAlign = "center";
       ctx.shadowColor = "#f00";
@@ -167,34 +167,21 @@ const HeartCanvas: React.FC = () => {
       requestAnimationFrame(loop);
     };
 
-    loop();op();
+    loop();
 
-    return () => {    return () => {
-      window.removeEventListener("resize", resizeCanvas);ow.removeEventListener("resize", resizeCanvas);
+    return () => {
+      window.removeEventListener("resize", resizeCanvas);
     };
   }, []);
 
   return (
-    <canvasanvas
-      ref={canvasRef}  ref={canvasRef}
-      id="heart"    id="heart"
-      style={{      style={{
+    <canvas
+      ref={canvasRef}
+      id="heart"
+      style={{
         display: "block",
-        width: "100vw",        width: "100vw",
+        width: "100vw",
         height: "100vh",
-        position: "fixed",
-        left: 0,
-        top: 0,
-        zIndex: 1,
-        pointerEvents: "none",
-      }}
-    />
-  );
-};
-
-export default HeartCanvas;
-
-export default HeartCanvas;};  );    />      }}        pointerEvents: "none",        zIndex: 1,        top: 0,        left: 0,        position: "fixed",        height: "100vh",        height: "100vh",
         position: "fixed",
         left: 0,
         top: 0,
