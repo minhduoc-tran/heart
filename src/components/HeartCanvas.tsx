@@ -22,12 +22,23 @@ const HeartCanvas: React.FC = () => {
     const mobile = isDevice;
     const koef = mobile ? 0.5 : 1;
 
-    let width = (canvas.width = koef * window.innerWidth);
-    let height = (canvas.height = koef * window.innerHeight);
+    let width = 0;
+    let height = 0;
     const rand = Math.random;
 
-    ctx.fillStyle = "rgba(0,0,0,1)";
-    ctx.fillRect(0, 0, width, height);
+    // Hàm cập nhật kích thước canvas và vẽ lại nền
+    const resizeCanvas = () => {
+      width = window.innerWidth * koef;
+      height = window.innerHeight * koef;
+      canvas.width = width;
+      canvas.height = height;
+      ctx.setTransform(1, 0, 0, 1, 0, 0); // reset transform nếu có
+      ctx.fillStyle = "rgba(0,0,0,1)";
+      ctx.fillRect(0, 0, width, height);
+    };
+
+    resizeCanvas();
+    window.addEventListener("resize", resizeCanvas);
 
     const heartPosition = (rad: number): [number, number] => {
       return [
@@ -50,15 +61,6 @@ const HeartCanvas: React.FC = () => {
     ): [number, number] => {
       return [dx + pos[0] * sx, dy + pos[1] * sy];
     };
-
-    const handleResize = () => {
-      width = canvas.width = koef * window.innerWidth;
-      height = canvas.height = koef * window.innerHeight;
-      ctx.fillStyle = "rgba(0,0,0,1)";
-      ctx.fillRect(0, 0, width, height);
-    };
-
-    window.addEventListener("resize", handleResize);
 
     const traceCount = mobile ? 20 : 50;
     const pointsOrigin: [number, number][] = [];
@@ -105,9 +107,11 @@ const HeartCanvas: React.FC = () => {
     let time = 0;
 
     const loop = () => {
-      const n = -Math.cos(time);
-      pulse((1 + n) * 0.5, (1 + n) * 0.5);
-      time += (Math.sin(time) < 0 ? 9 : n > 0.8 ? 0.2 : 1) * config.timeDelta;
+      // Hiệu ứng tim đập thình thịch
+      const beat = Math.abs(Math.sin(time * 2.2)) ** 2.5;
+      const scale = 0.7 + 0.3 * beat;
+      pulse(scale, scale);
+      time += config.timeDelta * 1.5;
 
       ctx.fillStyle = "rgba(0,0,0,.1)";
       ctx.fillRect(0, 0, width, height);
@@ -163,18 +167,40 @@ const HeartCanvas: React.FC = () => {
       requestAnimationFrame(loop);
     };
 
-    loop();
+    loop();op();
 
-    return () => {
-      window.removeEventListener("resize", handleResize);
+    return () => {    return () => {
+      window.removeEventListener("resize", resizeCanvas);ow.removeEventListener("resize", resizeCanvas);
     };
   }, []);
 
   return (
-    <canvas
-      ref={canvasRef}
-      id="heart"
-      style={{ display: "block", width: "100vw", height: "100vh" }}
+    <canvasanvas
+      ref={canvasRef}  ref={canvasRef}
+      id="heart"    id="heart"
+      style={{      style={{
+        display: "block",
+        width: "100vw",        width: "100vw",
+        height: "100vh",
+        position: "fixed",
+        left: 0,
+        top: 0,
+        zIndex: 1,
+        pointerEvents: "none",
+      }}
+    />
+  );
+};
+
+export default HeartCanvas;
+
+export default HeartCanvas;};  );    />      }}        pointerEvents: "none",        zIndex: 1,        top: 0,        left: 0,        position: "fixed",        height: "100vh",        height: "100vh",
+        position: "fixed",
+        left: 0,
+        top: 0,
+        zIndex: 1,
+        pointerEvents: "none",
+      }}
     />
   );
 };
