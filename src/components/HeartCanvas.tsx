@@ -157,7 +157,7 @@ const HeartCanvas: React.FC = () => {
       ctx.textAlign = "center";
       ctx.shadowColor = "#f00";
       ctx.shadowBlur = 10;
-      ctx.fillText("Trần Được", width / 2, height / 2 + 120);
+      ctx.fillText("Nguyễn Bảo Trâm", width / 2, height / 2 + 120);
       ctx.restore();
 
       requestAnimationFrame(loop);
